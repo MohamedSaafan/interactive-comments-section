@@ -1,14 +1,21 @@
+import { commentsData } from "./commentsData";
+
 interface Author {
-  id: string;
-  imageProfileLink: string;
-  name: string;
+  image: { png: string; webp: string };
+  username: string;
 }
-interface Comments {
-  id: string;
-  author: Author;
-  dateSinceEpoch: number;
-  body: string;
-  strength: number;
-  commentParentID: string;
-  nestingLevel: number;
+interface Comment {
+  id: number;
+  content: string;
+
+  createdAt: string;
+  score: number;
+  user: Author;
+  replies?: Comment[];
+  replyingTo?: string;
+}
+
+interface CommentsData {
+  currentUser: Author;
+  comments: Comment[];
 }
