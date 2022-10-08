@@ -1,0 +1,27 @@
+.comment {
+  &__replies {
+    max-width: 95%;
+    margin-left: auto;
+  }
+  &__nestingwrapper {
+    display: flex;
+    margin: auto;
+    width: 95%;
+  }
+
+  &__line {
+    background-color: var(--color-light-grayish-blue);
+    width: 2px;
+    margin-right: 1rem;
+  }
+  &__lineformatter {
+    content: " ";
+    background-color: var(--color-very-light-gray);
+    display: inline-block;
+    position: absolute;
+    height: 1rem;
+    width: 10px;
+    left: 5%;
+    z-index: 10;
+  }
+}

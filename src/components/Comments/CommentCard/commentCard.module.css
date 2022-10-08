@@ -1,9 +1,12 @@
 .comment {
   background-color: var(--color-white);
   border-radius: 0.4rem;
-  width: 85%;
+  max-width: 85%;
   margin: 1rem auto;
   padding: 1rem;
+}
+.comment:last-of-type {
+  margin: 1rem auto 0 auto;
 }
 .comment__header {
   display: flex;
