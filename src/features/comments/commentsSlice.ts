@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { commentsData } from "../../commentsData";
+import { findComment } from "../../helpers/findComment";
 import { Comment } from "../../types";
 
 const comments: Comment[] = commentsData.comments;
@@ -7,24 +8,6 @@ const sortComments = (comments: Comment[]) => {
   return comments.sort((comment1, comment2) => comment1.id - comment2.id);
 };
 
-const findComment: (id: number, comments: Comment[]) => Comment | undefined = (
-  id,
-  comments
-) => {
-  if (comments.length === 0) return;
-  for (let i = 0; i < comments.length; i++) {
-    if (comments[i].id === id) return comments[i];
-    if (comments[i].replies) {
-      const comment = findComment(id, comments[i].replies!);
-      if (Array.isArray(comment)) {
-        findComment(id, comment);
-      } else if (!comment) {
-        continue;
-      }
-      return comment;
-    }
-  }
-};
 const commentsSlice = createSlice({
   name: "comments",
   initialState: comments,
@@ -39,7 +22,12 @@ const commentsSlice = createSlice({
       const targetComment = state.find(
         (comment) => (comment.id = action.payload.targetCommentID)
       );
-      targetComment?.replies?.push(action.payload.comment);
+      if (targetComment) {
+        if (!targetComment.replies) {
+          targetComment.replies = [];
+        }
+        targetComment.replies.push(action.payload.comment);
+      }
     },
     incrementScore: (state, action: PayloadAction<number>) => {
       // handling the case it is in the root comments only
